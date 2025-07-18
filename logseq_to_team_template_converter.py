@@ -216,7 +216,7 @@ class LogSeqToTeamTemplateConverter:
         for asset_file in assets_dir.rglob("*"):
             if asset_file.is_file():
                 try:
-                    # 复制资源文件
+                    # 复制资源文件 
                     relative_path = asset_file.relative_to(assets_dir)
                     target_path = notion_assets_dir / relative_path
                     

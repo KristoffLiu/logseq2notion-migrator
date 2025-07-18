@@ -21,7 +21,7 @@
 │   └── research-log/           # 第三个笔记集
 │       ├── pages/
 │       └── journals/
-├── notion-import/              # 自动生成的转换结果
+├── notion-output/              # 自动生成的转换结果
 ├── logseq_to_notion_converter.py
 ├── quick_convert.py
 └── README.md
@@ -54,42 +54,42 @@ python quick_convert.py project-a --logseq-path my-logseq --output-path my-outpu
 **参数说明：**
 - `source_name`: 要转换的LogSeq导出子目录名称（可选，有默认值）
 - `--logseq-path`: LogSeq导出根目录路径（默认: logseq-export）
-- `--output-path`: Notion导入根目录路径（默认: notion-import）
+- `--output-path`: Notion导入根目录路径（默认: notion-output）
 - `--with-uuid`: 生成UUID后缀（默认不生成）
 
 #### 方法二：命令行转换
 
 **查看可用的LogSeq导出：**
 ```bash
-python logseq_to_notion_converter.py logseq-export notion-import --list
+python logseq_to_notion_converter.py logseq-export notion-output --list
 ```
 
 **转换指定的导出：**
 ```bash
 # 转换单个笔记集
-python logseq_to_notion_converter.py logseq-export notion-import -s project-a
+python logseq_to_notion_converter.py logseq-export notion-output -s project-a
 
 # 转换单个笔记集并生成UUID
-python logseq_to_notion_converter.py logseq-export notion-import -s project-a --with-uuid
+python logseq_to_notion_converter.py logseq-export notion-output -s project-a --with-uuid
 ```
 
 **批量转换所有导出：**
 ```bash
 # 转换所有笔记集
-python logseq_to_notion_converter.py logseq-export notion-import --all
+python logseq_to_notion_converter.py logseq-export notion-output --all
 
 # 转换所有笔记集并生成UUID
-python logseq_to_notion_converter.py logseq-export notion-import --all --with-uuid
+python logseq_to_notion_converter.py logseq-export notion-output --all --with-uuid
 ```
 
 ### 4. 导入到Notion
 
 #### 📂 输出结构
-转换完成后，每个笔记集会在 `notion-import/` 下生成带时间戳的子目录：
+转换完成后，每个笔记集会在 `notion-output/` 下生成带时间戳的子目录：
 ```
-notion-import/
+notion-output/
 └── project-a-20250718-143022/
-    ├── notion-import/          # 📁 Notion导入目录
+    ├── notion-output/          # 📁 Notion导入目录
     │   ├── 页面1.md
     │   ├── assets/
     │   └── conversion_report.json
@@ -105,7 +105,7 @@ notion-import/
 4. 选择解压后的文件夹进行导入
 
 **方式二：直接使用目录**
-1. 进入 `notion-import/` 子目录
+1. 进入 `notion-output/` 子目录
 2. 在Notion中选择 `Import` → `Markdown & CSV`
 3. 选择该目录进行导入
 
@@ -116,7 +116,7 @@ notion-import/
 ### 🎁 新增功能
 - **自动ZIP打包**: 每次转换完成后自动生成ZIP压缩包
 - **双重输出格式**: 同时提供目录和ZIP文件两种格式
-- **嵌套目录结构**: 外层时间戳目录 → notion-import子目录 → Notion文件
+- **嵌套目录结构**: 外层时间戳目录 → notion-output子目录 → Notion文件
 
 ### ✅ 支持的转换
 
@@ -153,9 +153,9 @@ logseq-export/
 **Notion结构:**
 ```
 # 默认格式（无UUID，文件名简洁）
-notion-import/
+notion-output/
 ├── project-a-20250718-143022/           # 第一个笔记集转换结果
-│   ├── notion-import/                   # Notion导入目录
+│   ├── notion-output/                   # Notion导入目录
 │   │   ├── 页面1.md
 │   │   ├── 页面2.md
 │   │   ├── 2025年01月01日.md
@@ -165,16 +165,16 @@ notion-import/
 │   │   └── conversion_report.json
 │   └── project-a-20250718-143022.zip   # 自动生成的ZIP包
 └── personal-notes-20250718-143156/      # 第二个笔记集转换结果
-    ├── notion-import/
+    ├── notion-output/
     │   ├── 笔记.md
     │   ├── 2025年01月03日.md
     │   └── conversion_report.json
     └── personal-notes-20250718-143156.zip
 
 # 带UUID格式（--with-uuid参数）
-notion-import/
+notion-output/
 ├── project-a-20250718-143022/
-│   ├── notion-import/
+│   ├── notion-output/
 │   │   ├── 页面1 a1b2c3d4.md
 │   │   ├── 页面2 e5f6g7h8.md
 │   │   ├── 2025年01月01日 i9j0k1l2.md
@@ -182,7 +182,7 @@ notion-import/
 │   │   └── conversion_report.json
 │   └── project-a-20250718-143022.zip
 └── personal-notes-20250718-143156/
-    ├── notion-import/
+    ├── notion-output/
     │   ├── 笔记 x9y8z7w6.md
     │   ├── 2025年01月03日 v5u4t3s2.md
     │   └── conversion_report.json
@@ -305,7 +305,7 @@ property:: 这是一个属性
 
 例如：
 - `my-notes-20250718-143022/` - 2025年7月18日14:30:22的转换结果
-  - `notion-import/` - Notion导入目录
+  - `notion-output/` - Notion导入目录
   - `my-notes-20250718-143022.zip` - 压缩包
 
 这样可以：
@@ -321,7 +321,7 @@ property:: 这是一个属性
 1. **初次设置**:
    ```bash
    # 创建目录结构
-   mkdir logseq-export notion-import
+   mkdir logseq-export notion-output
    
    # 将LogSeq导出放置到对应目录
    # logseq-export/project-name/
@@ -330,21 +330,21 @@ property:: 这是一个属性
 2. **单次转换**:
    ```bash
    # 查看可用导出
-   python logseq_to_notion_converter.py logseq-export notion-import --list
+   python logseq_to_notion_converter.py logseq-export notion-output --list
    
    # 转换指定项目
-   python logseq_to_notion_converter.py logseq-export notion-import -s project-name
+   python logseq_to_notion_converter.py logseq-export notion-output -s project-name
    ```
 
 3. **批量迁移**:
    ```bash
    # 转换所有项目
-   python logseq_to_notion_converter.py logseq-export notion-import --all
+   python logseq_to_notion_converter.py logseq-export notion-output --all
    ```
 
 4. **Notion导入**:
    - 在Notion中为每个项目创建独立的工作区或页面
-   - 可以使用ZIP文件或直接使用notion-import目录导入
+   - 可以使用ZIP文件或直接使用notion-output目录导入
    - 推荐使用ZIP文件：解压后导入，保持文件结构完整
 
 ## 🤝 贡献

@@ -59,7 +59,7 @@ class LogSeqToNotionConverter:
         
         # 创建外层目录和内层Notion导入目录
         self.outer_output_path = self.output_base_path / output_dir_name
-        self.output_path = self.outer_output_path / "notion-import"
+        self.output_path = self.outer_output_path / "notion-output"
         
         # 确保输出目录存在
         self.output_path.mkdir(parents=True, exist_ok=True)
@@ -298,16 +298,16 @@ class LogSeqToNotionConverter:
         """将转换结果打包成ZIP文件"""
         self.log("开始创建ZIP压缩包...")
         
-        # ZIP文件路径（与notion-import目录同级）
+        # ZIP文件路径（与notion-output目录同级）
         zip_filename = f"{self.outer_output_path.name}.zip"
         zip_path = self.outer_output_path / zip_filename
         
         try:
             with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-                # 遍历notion-import目录中的所有文件
+                # 遍历notion-output目录中的所有文件
                 for file_path in self.output_path.rglob('*'):
                     if file_path.is_file():
-                        # 计算相对路径（相对于notion-import目录）
+                        # 计算相对路径（相对于notion-output目录）
                         relative_path = file_path.relative_to(self.output_path)
                         # 在ZIP中保持目录结构
                         zipf.write(file_path, relative_path)

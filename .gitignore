@@ -1,1 +1,5 @@
 logseq_to_team_template_converter.py
+
+# 忽略输入和输出文件夹的内容
+logseq-export/
+notion-output/

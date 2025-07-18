@@ -16,8 +16,8 @@ def main():
                         help='要转换的LogSeq导出子目录名称')
     parser.add_argument('--logseq-path', default='logseq-export',
                         help='LogSeq导出根目录路径 (默认: logseq-export)')
-    parser.add_argument('--output-path', default='notion-import',
-                        help='Notion导入根目录路径 (默认: notion-import)')
+    parser.add_argument('--output-path', default='notion-output',
+                        help='Notion导入根目录路径 (默认: notion-output)')
     parser.add_argument('--with-uuid', action='store_true',
                         help='生成UUID后缀（默认不生成，文件名更简洁）')
     

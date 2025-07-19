@@ -191,8 +191,17 @@ class LogSeqToNotionConverter:
         content = re.sub(r'^(\s*)-\s+LATER\s+', r'\1- [ ] ', content, flags=re.MULTILINE)
         content = re.sub(r'^(\s*)-\s+NOW\s+', r'\1- [ ] ', content, flags=re.MULTILINE)
         
-        # 移除LogSeq特有的属性语法
+        # 完全移除id::相关的元数据行
+        content = re.sub(r'^\s*id::\s*.*$\n?', '', content, flags=re.MULTILINE)
+        
+        # 移除LogSeq特有的其他属性语法（但保留id::以外的）
         content = re.sub(r'^([a-zA-Z-]+)::\s*(.*)$', r'**\1**: \2', content, flags=re.MULTILINE)
+        
+        # 移除图片语法中的尺寸参数 {:height xxx, :width xxx}
+        content = re.sub(r'\{:height\s+\d+,?\s*:width\s+\d+\}', '', content)
+        content = re.sub(r'\{:width\s+\d+,?\s*:height\s+\d+\}', '', content)
+        content = re.sub(r'\{:height\s+\d+\}', '', content)
+        content = re.sub(r'\{:width\s+\d+\}', '', content)
         
         # 转换块引用（简化处理，转换为引用格式）
         content = re.sub(r'\(\(\([a-f0-9-]+\)\)\)', '> [引用块]', content)
